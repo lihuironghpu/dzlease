@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>车辆选择</title>
+    <style>
+        html{
+            font-family: sans-serif,"微软雅黑";
+        }
+        body,ul,li,h4,p{margin: 0;padding: 0;}
+        img{display: block}
+        li{list-style: none;}
+        .container ul{overflow: hidden}
+        .container ul li{
+            float: left;
+            width: 50%;
+            outline: 1px solid #ddd;
+            outline-offset: -10px;;
+            height: 180px;
+        }
+        .container ul li>div{
+            padding: 10px 0 10px 10px;
+            width: 300px;
+            float: left;
+        }
+        .container ul li>div+div{
+            width: auto;
+            padding: 20px 0;
+        }
+        .container ul li img{
+            max-height: 160px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .container ul li h4{
+            padding-top: 10px;
+        }
+        .container ul li p{
+            color: #666;
+            font-size: 12px;
+        }
+        .container ul li .base_info{
+            margin: 10px 0 15px 0;
+        }
+        .container ul li .base_info span {
+            position: relative;
+        }
+
+        .container ul li .base_info span:after {
+            content: " | ";
+        }
+        .container ul li .base_info span.licence_type:after{
+            content: "";
+        }
+        .container ul li .base_info span.seat_num:after{
+            content: "座 | ";
+        }
+        .container ul li .price_info{
+            margin-bottom: 15px;
+        }
+        .container ul li .price_info span{
+            color: #fa7272;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .container ul li .price_info:before{
+            content: '指导价：';
+        }
+        .container ul li .price_info:after{
+            content: '元';
+        }
+
+        .container ul li .select_btn{
+            display: block;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+            background: #2c95c4;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .container ul li .select_btn:hover{
+            opacity: .8;
+            filter: Alpha(Opacity=80);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul id="carList">
+            <!--
+            <li>
+                <div>
+                    <img src="img/default_car.jpg" alt="车辆缩略图"/>
+                </div>
+                <div>
+                    <h4>奔驰A200时尚(高端深空灰)</h4>
+                    <p class="base_info"><span>奔驰</span><span>2010</span><span>5</span><span>沪牌</span></p>
+                    <p class="price_info"><span>279000</span></p>
+                    <div>
+                        <a class="select_btn">选择</a>
+                    </div>
+                </div>
+            </li>
+           -->
+        </ul>
+    </div>
+    <script>
+        !function(){
+           var carData = [
+               {
+                   "carId": "001",
+                   "carName": "车型A",
+                   "carImg": "img/default_car.jpg",
+                   "brand": "奔驰",
+                   "year": "2010",
+                   "seatNum": "5",
+                   "licenceType": "沪牌",
+                   "guideMoney": "279000"
+               },
+               {
+                   "carId": "002",
+                   "carName": "车型B",
+                   "carImg": "img/bg.jpg",
+                   "brand": "奔驰",
+                   "year": "2013",
+                   "seatNum": "7",
+                   "licenceType": "沪牌",
+                   "guideMoney": "58000"
+               },
+               {
+                   "carId": "003",
+                   "carName": "车型C",
+                   "carImg": "",
+                   "brand": "奔驰",
+                   "year": "2011",
+                   "seatNum": "5",
+                   "licenceType": "沪牌",
+                   "guideMoney": "282000"
+               }
+           ];
+            function initCarList(carData){
+                for(var i = 0 ; i < carData.length ; i ++){
+                    var listBox = document.getElementById("carList");
+                    var liEle = document.createElement("li");
+
+                    //图片模块
+                    var imgBox = document.createElement("div");
+                    var imgEle = document.createElement("img");
+                    imgEle.setAttribute("src",carData[i].carImg.length<=0 ? "img/default_car.jpg" : carData[i].carImg);
+                    imgEle.setAttribute("alt",carData[i].carName);
+                    imgBox.appendChild(imgEle);
+                    liEle.appendChild(imgBox);
+
+                    //右侧基本信息模块
+                    var infoBox = document.createElement("div");
+                    var h4Ele = document.createElement("h4");
+                    h4Ele.innerHTML = carData[i].carName;
+                    infoBox.appendChild(h4Ele);
+
+                    //车辆基本信息
+                    var baseInfoEle = document.createElement("p");
+                    baseInfoEle.className = "base_info";
+                    var brandEle = document.createElement("span");
+                    brandEle.innerHTML = carData[i].brand;
+                    baseInfoEle.appendChild(brandEle);
+                    var yearEle = document.createElement("span");
+                    yearEle.innerHTML = carData[i].year;
+                    baseInfoEle.appendChild(yearEle);
+                    var seatNumEle = document.createElement("span");
+                    seatNumEle.innerHTML = carData[i].seatNum;
+                    seatNumEle.className = "seat_num";
+                    baseInfoEle.appendChild(seatNumEle);
+                    var licenceTypeEle = document.createElement("span");
+                    licenceTypeEle.innerHTML = carData[i].licenceType;
+                    licenceTypeEle.className = "licence_type";
+                    baseInfoEle.appendChild(licenceTypeEle);
+                    infoBox.appendChild(baseInfoEle);
+
+                    //车辆价格信息
+                    var priceInfoEle = document.createElement("p");
+                    priceInfoEle.className = "price_info";
+                    var priceEle = document.createElement("span");
+                    priceEle.innerHTML = carData[i].guideMoney;
+                    priceInfoEle.appendChild(priceEle);
+                    infoBox.appendChild(priceInfoEle);
+
+                    //按钮
+                    var btnBox = document.createElement("div");
+                    var btnEle = document.createElement("a");
+                    btnEle.innerHTML = "选择";
+                    btnEle.className = "select_btn";
+                    btnEle.setAttribute("data-value",carData[i].carId);
+                    //按钮绑定点击事件，传入车的ID
+                    (function(selectCar){
+                        btnEle.onclick = function(){
+                            alert("您选择的车是：id＝"+JSON.stringify(selectCar));
+                        };
+                    }(carData[i]));
+                    btnBox.appendChild(btnEle);
+                    infoBox.appendChild(btnBox);
+
+                    //把右侧信息添加到li标签
+                    liEle.appendChild(infoBox);
+
+                    //把li标签添加到ul里边
+                    listBox.appendChild(liEle);
+                    liEle = null;
+                }
+            }
+            initCarList(carData);
+
+        }();
+    </script>
+</body>
+</html>
